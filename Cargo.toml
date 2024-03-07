@@ -3,9 +3,9 @@ authors = "{{authors}}"
 categories = []
 description = ""
 edition = "2021"
-homepage = "https://github.com/FL03/${{crate_name}}/wikis"
+homepage = "https://github.com/${{owner}}/${{crate_name}}/wikis"
 license = "Apache-2.0"
-repository = "https://github.com/FL03/${{crate_name}}"
+repository = "https://github.com/${{owner}}/${{crate_name}}"
 readme = "README.md"
 version = "0.0.0" # TODO - Update cargo package version
 

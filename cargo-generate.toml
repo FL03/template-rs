@@ -11,7 +11,7 @@ type = "string"
 choices = ["Apache-2.0", "MIT", "Unlicense"]
 default = "Apache-2.0"
 prompt = "license (SPDX)"
-type = "text"
+type = "string"
 
 [placeholders]
 app_name = { default = "${crate_name}-app", prompt = "app name:", type = "string" }
