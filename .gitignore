@@ -1,0 +1,22 @@
+# Artifacts
+**/.artifacts/data/
+
+# Development
+
+### IntelliJ IDEA
+**/.idea/
+
+### Visual Studio
+**/.vscode/
+
+# Languages
+
+### Rust
+**/debug/
+**/target/
+
+Cargo.lock
+
+*.pdb
+
+*.rs.bk
