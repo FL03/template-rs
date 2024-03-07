@@ -8,14 +8,10 @@ prompt = "Git origin (username)"
 type = "string"
 
 [placeholders.spdx]
-choices = [
-    "Apache-2.0",
-    "MIT",
-    "Unlicense"
-]
+choices = ["Apache-2.0", "MIT", "Unlicense"]
 default = "Apache-2.0"
 prompt = "license (SPDX)"
-type = "choices"
+type = "text"
 
 [placeholders]
 app_name = { default = "${crate_name}-app", prompt = "app name:", type = "string" }
@@ -25,7 +21,7 @@ owner = { default = "{username}", prompt = "Codeowner", type = "string" }
 use_git = { default = true, prompt = "Initialize Git repository?", type = "boolean" }
 
 [conditional.'crate_type == "lib"']
-ignore = [ "src/main.rs" ]
+ignore = ["src/main.rs"]
 
 [conditional.'crate_type == "bin"']
-include = [ "src/bin/main.rs" ]
+include = ["src/bin/main.rs"]
