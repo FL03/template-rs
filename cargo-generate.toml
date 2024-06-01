@@ -1,27 +1,11 @@
 [template]
-cargo_generate_version = ">=0.19"
+cargo_generate_version = ">=0.9.0"
 
-
-[placeholders.origin]
-default = "{username}"
-prompt = "Git origin (username)"
+[placeholders.git]
+description = "The path to the desired git"
+prompt = "Optionally, provide the path to the desired git"
 type = "string"
 
-[placeholders.spdx]
-choices = ["Apache-2.0", "MIT", "Unlicense"]
-default = "Apache-2.0"
-prompt = "license (SPDX)"
+[placeholders.description]
+prompt = "A short description of the project"
 type = "string"
-
-[placeholders]
-app_name = { default = "${crate_name}-app", prompt = "app name:", type = "string" }
-description = { default = "", prompt = "description:", type = "string" }
-github = { default = "", prompt = "GitHub Username:", type = "string" }
-owner = { default = "{username}", prompt = "Codeowner", type = "string" }
-use_git = { default = true, prompt = "Initialize Git repository?", type = "boolean" }
-
-[conditional.'crate_type == "lib"']
-ignore = ["src/main.rs"]
-
-[conditional.'crate_type == "bin"']
-include = ["src/bin/main.rs"]

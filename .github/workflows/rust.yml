@@ -1,41 +1,31 @@
-name: Rust
+name: rust
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+concurrency: 
   cancel-in-progress: false
+  group: ${{ github.event.repository.name }}-rust
 
 env:
   CARGO_TERM_COLOR: always
+  CRATE_BASENAME: ${{ github.event.repository.name }}
 
 on:
+  pull_request:
+    branches: [ main ]
   push:
     branches: [ main ]
-    tags: [ nightly*,  v*.*.* ]
+    tags: [ v*.*.* ]
   release:
+    types: [ created ]
   repository_dispatch:
-    types: [ publish ]
+    types: [ rust ]
   schedule:
     - cron: "30 21 * * 0" # Every Sunday at 9:30pm UTC
   workflow_dispatch:
-    inputs:
-      bench:
-        description: "Run benchmarks"
-        required: false
-        default: false
-        type: boolean
-      platform:
-        description: "Platform to run the build on"
-        required: true
-        default: "ubuntu-latest"
-        type: string
-      toolchain:
-        description: "Rust toolchain to use"
-        required: true
-        default: "nightly"
-        type: string
+
+permissions: write-all
 
 jobs:
-  builder:
+  build:
     name: Build
     strategy:
       matrix:
@@ -44,48 +34,36 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
-      - name: setup (langspace)
+      - name: setup (rustup)
         run: |
-          rustup update
           rustup default ${{ matrix.toolchain }}
-      - name: Build
-        id: rust-build
-        run: cargo build --features full -r -v --workspace
-      - name: Cache build
-        id: rust-cache
+          rustup update
+      - name: build (workspace)
+        run: cargo build --all-features -r -v --workspace
+      - name: cache
         uses: actions/cache@v4
         with:
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-          key: ${{ matrix.toolchain }}-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+  bench:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup (rustup)
+        run: rustup default nightly && rustup update
+      - name: cargo (bench)
+        run: cargo bench --features full -v --workspace
   test:
     name: Test
-    needs: builder
     strategy:
       matrix:
         toolchain: [ stable, nightly ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: setup (langspace)
-        run: |
-          rustup update
-          rustup default ${{ matrix.toolchain }}
-      - name: Test
-        id: rust-test
-        run: cargo test --features full -v --workspace
-  benchmark:
-    name: Benchmark
-    needs: builder
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: setup (langspace)
-        run: |
-          rustup update
-          rustup default nightly
-      - name: Bench
-        id: rust-bench
-        run: cargo bench --features full -v --workspace
+      - run: rustup default ${{ matrix.toolchain }} && rustup update
+      - run: cargo test --features full -v --workspace
