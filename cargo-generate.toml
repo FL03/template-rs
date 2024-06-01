@@ -2,6 +2,7 @@
 cargo_generate_version = ">=0.9.0"
 
 [placeholders.git]
+default = "github.com/username"
 description = "The path to the desired git"
 prompt = "Optionally, provide the path to the desired git"
 type = "string"
@@ -9,3 +10,5 @@ type = "string"
 [placeholders.description]
 prompt = "A short description of the project"
 type = "string"
+
+[conditional.'crate_type == "lib"']

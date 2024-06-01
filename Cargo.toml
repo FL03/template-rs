@@ -3,11 +3,11 @@ authors = ["{{ authors }}",]
 categories = [ ]
 description = "{{ description }}"
 edition = "2021"
-homepage = "https://github.com/{{ codeowner }}/{{ project-name }}/wiki"
+homepage = "https://{{ git }}/{{ project-name }}/wiki"
 keywords = [ ]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/{{ codeowner }}/{{ project-name }}.git"
+repository = "https://{{ git }}/{{ project-name }}.git"
 version = "0.0.0"
 
 [workspace.dependencies]
