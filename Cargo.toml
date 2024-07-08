@@ -1,45 +1,50 @@
 [workspace.package]
-authors = "{{authors}}"
-categories = []
-description = ""
+authors = ["{{ authors }}",]
+categories = [ ]
+description = "{{ description }}"
 edition = "2021"
-homepage = "https://github.com/${{owner}}/${{crate_name}}/wikis"
-license = "{{spdx}}"
-repository = "https://github.com/${{owner}}/${{crate_name}}"
+homepage = "https://{{ git }}/{{ project-name }}/wiki"
+keywords = [ ]
+license = "Apache-2.0"
 readme = "README.md"
-version = "0.0.0" # TODO - Update cargo package version
-
-[workspace]
-default-members = [
-    "${{crate_name}}"
-]
-exclude = [ ]
-members = [
-    "${{crate_name}}",
-]
-resolver = "2"
+repository = "https://{{ git }}/{{ project-name }}.git"
+version = "0.0.0"
 
 [workspace.dependencies]
 
+[workspace]
+default-members = [
+    "{{ project-name }}"
+]
+
+exclude = [
+
+]
+
+members = [
+    "{{ project-name }}",
+]
+
+resolver = "2"
 
 [profile.dev]
-codegen-units = 256
+opt-level = 0
 debug = true
 debug-assertions = true
-incremental = true
-lto = false
-panic = "unwind"
-rpath = false
-opt-level = 0
 overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false
 
 [profile.release]
-codegen-units = 16
+opt-level = 3
 debug = false
 debug-assertions = false
-incremental = false
-lto = false
-panic = "unwind"
-rpath = false
-opt-level = "z"
 overflow-checks = false
+lto = false
+panic = 'unwind'
+incremental = false
+codegen-units = 16
+rpath = false
