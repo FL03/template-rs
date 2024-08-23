@@ -1,6 +1,6 @@
 /*
-    Appellation: rstopo <module>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: {{ project-name }} <library>
+    Contrib: {{ authors }}
 */
 //! # {{ project-name }}
 //!

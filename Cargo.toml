@@ -18,11 +18,11 @@ authors = ["{{ authors }}",]
 categories = [ ]
 description = "{{ description }}"
 edition = "2021"
-homepage = "https://{{ provider }}/{{ codeowner }}/{{ project-name }}/wiki"
+homepage = "https://{{ provider }}/{{ username }}/{{ project-name }}/wiki"
 keywords = [ ]
-license = "Apache-2.0"
+license = "{{ license }}"
 readme = "README.md"
-repository = "https://{{ provider }}/{{ codeowner }}/{{ project-name }}.git"
+repository = "https://{{ provider }}/{{ username }}/{{ project-name }}.git"
 version = "0.0.0"
 
 [profile.dev]

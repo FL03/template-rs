@@ -1,11 +1,21 @@
 [template]
 cargo_generate_version = ">=0.9.0"
 
+[placeholders.username]
+default = "username"
+description = "The code owner's username"
+type = "string"
+
 [placeholders.provider]
+choices = [
+    "github.com", 
+    "gitlab.com", 
+    "bitbucket.org"
+]
 default = "github.com"
 description = "The path to the desired git"
 prompt = "Optionally, provide the path to the desired git"
-type = "choice"
+type = "string"
 
 [placeholders.description]
 prompt = "A short description of the project"
