@@ -1,14 +1,24 @@
 [template]
 cargo_generate_version = ">=0.9.0"
 
-[placeholders.git]
-default = "github.com/username"
+[placeholders.provider]
+default = "github.com"
 description = "The path to the desired git"
 prompt = "Optionally, provide the path to the desired git"
-type = "string"
+type = "choice"
 
 [placeholders.description]
 prompt = "A short description of the project"
+type = "string"
+
+[placeholders.license]
+choices = [
+    "Apache-2.0", 
+    "MIT", 
+    "Unrestricted"
+]
+default = "Apache-2.0"
+prompt = "What license to use?"
 type = "string"
 
 [conditional.'crate_type == "lib"']

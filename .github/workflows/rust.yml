@@ -1,8 +1,8 @@
 name: rust
 
-concurrency: 
+concurrency:   
   cancel-in-progress: false
-  group: ${{ github.event.repository.name }}-rust
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
   CARGO_TERM_COLOR: always
