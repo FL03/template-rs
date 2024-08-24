@@ -1,31 +1,29 @@
-[workspace.package]
-authors = ["{{ authors }}",]
-categories = [ ]
-description = "{{ description }}"
-edition = "2021"
-homepage = "https://{{ git }}/{{ project-name }}/wiki"
-keywords = [ ]
-license = "Apache-2.0"
-readme = "README.md"
-repository = "https://{{ git }}/{{ project-name }}.git"
-version = "0.0.0"
-
-[workspace.dependencies]
-
 [workspace]
 default-members = [
     "{{ project-name }}"
 ]
 
-exclude = [
-
-]
+exclude = [ ]
 
 members = [
     "{{ project-name }}",
 ]
 
 resolver = "2"
+
+[workspace.dependencies]
+
+[workspace.package]
+authors = ["{{ authors }}",]
+categories = [ ]
+description = "{{ description }}"
+edition = "2021"
+homepage = "https://{{ provider }}/{{ username }}/{{ project-name }}/wiki"
+keywords = [ ]
+license = "{{ license }}"
+readme = "README.md"
+repository = "https://{{ provider }}/{{ username }}/{{ project-name }}.git"
+version = "0.0.0"
 
 [profile.dev]
 opt-level = 0
