@@ -1,14 +1,14 @@
 # {{ project-name }}
 
-[![crates.io](https://img.shields.io/crates/v/concision.svg)](https://crates.io/crates/{{ project-name }})
-[![docs.rs](https://docs.rs/concision/badge.svg)](https://docs.rs/{{ project-name }})
+[![crates.io](https://img.shields.io/crates/v/{{ project-name }}.svg)](https://crates.io/crates/{{ project-name }})
+[![docs.rs](https://docs.rs/{{ project-name }}/badge.svg)](https://docs.rs/{{ project-name }})
 
 [![clippy](https://github.com/FL03/{{ project-name }}/actions/workflows/clippy.yml/badge.svg)](https://github.com/FL03/{{ project-name }}/actions/workflows/clippy.yml)
 [![rust](https://github.com/FL03/{{ project-name }}/actions/workflows/rust.yml/badge.svg)](https://github.com/FL03/{{ project-name }}/actions/workflows/rust.yml)
 
 ***
 
-### _The library is currently in the early stages of development and is not yet ready for production use._
+_*The library is currently in the early stages of development and is not yet ready for production use.*_
 
 {{ description }} 
 
