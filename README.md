@@ -2,19 +2,18 @@
 
 [![crates.io](https://img.shields.io/crates/v/{{ project-name }}.svg)](https://crates.io/crates/{{ project-name }})
 [![docs.rs](https://docs.rs/{{ project-name }}/badge.svg)](https://docs.rs/{{ project-name }})
-
 [![clippy](https://github.com/FL03/{{ project-name }}/actions/workflows/clippy.yml/badge.svg)](https://github.com/FL03/{{ project-name }}/actions/workflows/clippy.yml)
 [![rust](https://github.com/FL03/{{ project-name }}/actions/workflows/rust.yml/badge.svg)](https://github.com/FL03/{{ project-name }}/actions/workflows/rust.yml)
 
 ***
 
-_*The library is currently in the early stages of development and is not yet ready for production use.*_
+_**The library is currently in the early stages of development and is not yet ready for production use.**_
 
-{{ description }} 
+{{ description }}
 
 ## Features
 
-
+- [x] Feature 1
 
 ## Getting Started
 
@@ -33,14 +32,16 @@ cargo build --features full -r --workspace
 
 ## Usage
 
-### Example: Linear Model (biased)
+### Examples
+
+#### _Basic Usage_
 
 ```rust
     extern crate {{ project-name }};
 
-    fn main() -> anyhow::Result<()> {
+    fn main() -> Result<(), Box<dyn std::error::Error>> {
         tracing_subscriber::fmt::init();
-        tracing::info!("Starting linear model example");
+        tracing::info!("Welcome to {name}", name = {{ project-name }});
 
 
         Ok(())
