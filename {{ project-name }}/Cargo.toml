@@ -19,18 +19,12 @@ default = [
 
 full = [
     "default",
-    "rand",
     "serde",
 ]
 
-# [FF] Dependencies
+# ********* [FF] Dependencies *********
 alloc = [
-    "num/alloc",
     "serde?/alloc",
-]
-
-rand = [
-    "num/rand"
 ]
 
 serde = [
@@ -40,13 +34,8 @@ serde = [
 # ********* [FF] Environments *********
 std = [
     "alloc",
-    "num/std",
     "serde?/std",
 ]
-
-wasm = []
-
-wasi = []
 
 [lib]
 bench = true
@@ -56,18 +45,16 @@ test = true
 
 [build-dependencies]
 
-[dev-dependencies]
-lazy_static = "1"
-
-[dependencies.num]
-default-features = false
-version = "0.4"
+[dependencies]
 
 [dependencies.serde]
 default-features = false
 features = ["derive"]
 optional = true
 version = "1"
+
+[dev-dependencies]
+lazy_static.workspace = true
 
 [package.metadata.docs.rs]
 all-features = true

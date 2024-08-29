@@ -6,14 +6,12 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
-  CRATE_BASENAME: ${{ github.event.repository.name }}
 
 on:
   pull_request:
     branches: [ main ]
   push:
     branches: [ main ]
-    tags: [ v*.*.* ]
   release:
     types: [ created ]
   repository_dispatch:
@@ -25,11 +23,11 @@ on:
 permissions: write-all
 
 jobs:
-  build:
-    name: Build
+  workspace:
+    name: Workspace
     strategy:
       matrix:
-        platform: [ ubuntu-latest ]
+        platform: [ macos-latest, ubuntu-latest, windows-latest ]
         toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
@@ -57,3 +55,4 @@ jobs:
             ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.os }}-cargo-${{ matrix.toolchain }}-
             ${{ runner.os }}-cargo-
+            ${{ runner.os }}-

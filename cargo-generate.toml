@@ -1,9 +1,10 @@
 [template]
 cargo_generate_version = ">=0.9.0"
 
-[placeholders.username]
-default = "username"
-description = "The code owner's username"
+[placeholders.handle]
+default = "handle"
+description = "The registry handle for the codebase"
+prompt = "Please provide the handle for the registry; github.com/{handle}/{project_name}"
 type = "string"
 
 [placeholders.provider]
