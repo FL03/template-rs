@@ -25,10 +25,9 @@ jobs:
     env:
       CRATE: ${{ github.event.repository.name }}
     environment:
-      name: release
+      name: crates-io
       url: https://crates.io/crates/${{ env.CRATE }}
     runs-on: ubuntu-latest
-    needs: core
     steps:
       - uses: actions/checkout@v4
       - 
