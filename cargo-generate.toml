@@ -1,10 +1,25 @@
 [template]
 cargo_generate_version = ">=0.9.0"
 
+[placeholders.description]
+prompt = "A short description of the project"
+type = "string"
+
+
 [placeholders.handle]
 default = "handle"
 description = "The registry handle for the codebase"
 prompt = "Please provide the handle for the registry; github.com/{handle}/{project_name}"
+type = "string"
+
+[placeholders.license]
+choices = [
+    "Apache-2.0", 
+    "MIT", 
+    "Unrestricted"
+]
+default = "Apache-2.0"
+prompt = "What license to use?"
 type = "string"
 
 [placeholders.provider]
@@ -16,20 +31,6 @@ choices = [
 default = "github.com"
 description = "The path to the desired git"
 prompt = "Optionally, provide the path to the desired git"
-type = "string"
-
-[placeholders.description]
-prompt = "A short description of the project"
-type = "string"
-
-[placeholders.license]
-choices = [
-    "Apache-2.0", 
-    "MIT", 
-    "Unrestricted"
-]
-default = "Apache-2.0"
-prompt = "What license to use?"
 type = "string"
 
 [conditional.'crate_type == "lib"']

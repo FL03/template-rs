@@ -1,11 +1,10 @@
-name: crates
+name: crates-io
 
 concurrency:
   cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
-  BASENAME: ${{ github.event.repository.name }}
   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
 
@@ -16,12 +15,22 @@ on:
     types: [ crates-io ]
   workflow_dispatch:
 
-permissions: write-all
+permissions:
+  contents: read
+  deployments: read
+  packages: write
 
 jobs:
   publish:
-    name: Publish SDK
+    env:
+      CRATE: ${{ github.event.repository.name }}
+    environment:
+      name: release
+      url: https://crates.io/crates/${{ env.CRATE }}
     runs-on: ubuntu-latest
+    needs: core
     steps:
       - uses: actions/checkout@v4
-      - run: cargo publish --all-features -v -p ${{ github.event.repository.name }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - 
+        name: publish (${{env.CRATE}})
+        run: cargo publish --all-features -v -p ${{ env.CRATE }}

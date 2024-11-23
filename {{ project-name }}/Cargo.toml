@@ -54,7 +54,6 @@ optional = true
 version = "1"
 
 [dev-dependencies]
-lazy_static.workspace = true
 
 [package.metadata.docs.rs]
 all-features = true
