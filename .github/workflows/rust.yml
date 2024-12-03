@@ -10,8 +10,9 @@ env:
 on:
   pull_request:
     branches: [ main, master, ]
-  release:
-    types: [ created ]
+    types: [ opened, synchronize, reopened ]
+  push:
+    tags: [ v*, "*-nightly" ]
   repository_dispatch:
     types: [ rust ]
   workflow_dispatch:
@@ -32,7 +33,7 @@ jobs:
         name: rustup
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          cache-key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           cache-workspaces: true
           target: ${{ matrix.target }}
           toolchain: ${{ matrix.toolchain }}
@@ -50,13 +51,12 @@ jobs:
         name: cache
         uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             target
           restore-keys: |
-            ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
-            ${{ runner.os }}-cargo-${{ matrix.toolchain }}-
+            ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.os }}-cargo-
             ${{ runner.os }}-
