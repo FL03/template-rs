@@ -1,17 +1,16 @@
 name: clippy
 
 concurrency:   
-  cancel-in-progress: true
+  cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+    types: [ opened, reopened, closed ]
   release:
   repository_dispatch:
     types: [ clippy ]
-  schedule:
-    - cron: "30 21 * * 0" # 9:30pm UTC
   workflow_dispatch:
 
 permissions:
@@ -21,25 +20,27 @@ permissions:
 
 jobs:
   clippy:
-    name: Clippy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       -
-        name: rustup
+        name: setup rust-toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           cache-workspaces: true
           components: clippy, rustfmt
-      - name: Install required cargo
+      - 
+        name: setup cargo
         run: cargo install clippy-sarif sarif-fmt
-      - name: Run rust-clippy
+      - 
+        name: Run rust-clippy
         run:
           cargo clippy
           --all-features
           --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
         continue-on-error: true
-      - name: Upload analysis
+      - 
+        name: Upload analysis
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: rust-clippy-results.sarif
