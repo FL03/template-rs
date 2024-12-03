@@ -9,8 +9,8 @@ env:
   CARGO_TERM_COLOR: always
 
 on:
-  release:
-    types: [ published ]
+  push:
+    tags: [ v*, "*-nightly" ]
   repository_dispatch:
     types: [ crates-io ]
   workflow_dispatch:
@@ -23,13 +23,18 @@ permissions:
 jobs:
   publish:
     env:
-      CRATE: ${{ github.event.repository.name }}
-    environment:
-      name: crates-io
-      url: https://crates.io/crates/${{ env.CRATE }}
+      PACKAGE: ${{ github.event.repository.name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - 
-        name: publish (${{env.CRATE}})
-        run: cargo publish --all-features -v -p ${{ env.CRATE }}
+        name: rustup
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          cache-workspaces: true
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+      - 
+        name: publish (${{ env.PACKAGE }})
+        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
