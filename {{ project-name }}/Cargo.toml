@@ -43,15 +43,15 @@ crate-type = ["cdylib", "rlib"]
 doctest = false
 test = true
 
+[[test]]
+name = "default"
+required-features = []
+
 [build-dependencies]
 
 [dependencies]
-
-[dependencies.serde]
-default-features = false
-features = ["derive"]
-optional = true
-version = "1"
+serde.workspace = { optional = true, workspace = true }
+thiserror.workspace = { workspace = true }
 
 [dev-dependencies]
 
