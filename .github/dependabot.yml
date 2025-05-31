@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: cargo
     directories:  
       - /
-      - {{project_name}}
+      - {{ project-name }}
     schedule:
       interval: monthly
   - package-ecosystem: devcontainers
