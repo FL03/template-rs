@@ -28,8 +28,15 @@ thiserror = { workspace = true }
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
 serde_json = { optional = true, workspace = true }
+# logging
+tracing = { optional = true, workspace = true }
+# macros
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { optional = true, workspace = true }
 
 [dev-dependencies]
+criterion = { workspace = true }
 lazy_static = { workspace = true}
 
 [package.metadata.docs.rs]
@@ -82,6 +89,14 @@ serde = [
 ]
 
 serde_json = ["dep:serde_json"]
+
+tracing = ["dep:tracing"]
+
+# ************* [Benchmarks] *************
+[[bench]]
+harness = false
+name = "default"
+required-features = ["std"]
 
 # ************* [Unit Tests] *************
 [[test]]
