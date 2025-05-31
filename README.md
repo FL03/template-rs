@@ -1,14 +1,14 @@
-# {{project_name}}
+# {{ project-name }}
 
-[![crates.io](https://img.shields.io/crates/v/{{project_name}}?style=for-the-badge&logo=rust)](https://crates.io/crates/{{project_name}})
-[![docs.rs](https://img.shields.io/docsrs/{{project_name}}?style=for-the-badge&logo=docs.rs)](https://docs.rs/{{project_name}})
-[![GitHub License](https://img.shields.io/github/license/{{alias}}/{{project_name}}?style=for-the-badge&logo=github)](https://github.com/{{alias}}/{{project_name}}/blob/main/LICENSE)
+[![crates.io](https://img.shields.io/crates/v/{{ project-name }}?style=for-the-badge&logo=rust)](https://crates.io/crates/{{ project-name }})
+[![docs.rs](https://img.shields.io/docsrs/{{ project-name }}?style=for-the-badge&logo=docs.rs)](https://docs.rs/{{ project-name }})
+[![GitHub License](https://img.shields.io/github/license/{{ alias }}/{{ project-name }}?style=for-the-badge&logo=github)](https://github.com/{{ alias }}/{{ project-name }}/blob/main/LICENSE)
 
 ***
 
 _**Warning: The library is currently in the early stages of development and is not yet ready for production use.**_
 
-`{{project_name}}`
+`{{ project-name }}`
 
 ## Features
 
@@ -19,7 +19,7 @@ _**Warning: The library is currently in the early stages of development and is n
 Add this to your `Cargo.toml`:
 
 ```toml
-[dependencies.{{project_name}}]
+[dependencies.{{ project-name }}]
 features = []
 version = "0.0.x"
 ```
@@ -29,7 +29,7 @@ version = "0.0.x"
 #### _Example #1:_ Basic Usage
 
 ```rust
-    extern crate {{project_name}};
+    extern crate {{ project-name }};
 
     fn main() -> anyhow::Result<()> {
         
@@ -77,13 +77,13 @@ rustup target add wasm32-unknown-unknown wasm32-p1 wasm32-p2
 Start by cloning the repository
 
 ```bash
-git clone https://github.com/{{alias}}/{{project_name}}.git -b main --depth 1
+git clone https://github.com/{{ alias }}/{{ project-name }}.git -b main --depth 1
 ```
 
 Then, navigate to the project directory:
 
 ```bash
-cd {{project_name}}
+cd {{ project-name }}
 ```
 
 Once you're in the project directory, you can build the project using `cargo`:
