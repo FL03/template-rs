@@ -2,14 +2,16 @@ version: 2
 
 updates:
   - package-ecosystem: cargo
+    directories:  
+      - /
+      - {{project_name}}
+    schedule:
+      interval: monthly
+  - package-ecosystem: devcontainers
     directory: /
     schedule:
       interval: monthly
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: monthly
-  - package-ecosystem: cargo
-    directory: /{{ project-name }}
     schedule:
       interval: monthly
