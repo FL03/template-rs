@@ -4,8 +4,8 @@ cargo_generate_version = ">=0.9.0"
 exclude = []
 
 includes = [
-    ".github/workflows/*update"
-    
+    ".github/workflows/*",
+
 ]
 
 [placeholders.description]
