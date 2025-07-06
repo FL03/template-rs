@@ -1,10 +1,8 @@
 /*
-    appellation: gvf <library>
+    appellation: {{ project-name }}-core <library>
     authors: @FL03
 */
-//! # gvf
-//!
-//! A generative visual framework for the scsys-io platform
+//! The core modules of the {{ project-name }} project
 #![allow(
     non_snake_case,
     clippy::missing_safety_doc,
@@ -16,17 +14,20 @@
 
 #[cfg(not(all(feature = "alloc", feature = "std")))]
 compiler_error! {
-    "Either the `alloc` or `std` feature must be enabled for the `gvf` crate."
+    "Either the `alloc` or `std` feature must be enabled for the `gvf-core` crate."
 }
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
 #[doc(inline)]
-pub use gvf_core::*;
+pub use self::error::{Error, Result};
+
+pub mod error;
+
+pub mod traits {
+    //! the core traits for the {{ project-name }} project
+}
 
 #[doc(hidden)]
-pub mod prelude {
-    #[allow(unused_imports)]
-    pub use gvf_core::prelude::*;
-}
+pub mod prelude {}

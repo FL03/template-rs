@@ -2,11 +2,9 @@
 default-members = [
     "{{ project-name }}"
 ]
-
-exclude = [ ]
-
 members = [
     "{{ project-name }}",
+    "core",
 ]
 
 resolver = "3"

@@ -25,7 +25,7 @@
 **/*.bk
 **/*.bk.*
 
-!Cargo.lock
+!**/Cargo.lock
 
 # Platform Specific
 
@@ -48,11 +48,6 @@
 **/*.db.*
 
 **/*.db-*.*
-
-**/*.lock
-**/*.lock.*
-
-**/*-lock.*
 
 **/*.log
 **/*.log.*

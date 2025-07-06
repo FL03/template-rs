@@ -15,34 +15,41 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
+crate-type = [
+  "cdylib", 
+  "rlib",
+]
 bench = true
-crate-type = ["cdylib", "rlib"]
+doc = true
 doctest = false
 test = true
-
-[dependencies]
-# error handling
-anyhow = { optional = true, workspace = true }
-thiserror = { workspace = true }
-# serialization
-serde = { optional = true, workspace = true }
-serde_derive = { optional = true, workspace = true }
-serde_json = { optional = true, workspace = true }
-# logging
-tracing = { optional = true, workspace = true }
-# macros
-paste = { workspace = true }
-smart-default = { workspace = true }
-strum = { optional = true, workspace = true }
-
-[dev-dependencies]
-criterion = { workspace = true }
-lazy_static = { workspace = true}
 
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
-rustc-args = ["--cfg", "docsrs"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "v{{version}}"
+
+[dependencies]
+{{ project-name }}-core = { default-features = false, workspace = true }
+
+[dev-dependencies]
+criterion = { features = ["plotters"], workspace = true }
+lazy_static = { workspace = true}
+
+# ************* [Benchmarks] *************
+[[bench]]
+harness = false
+name = "default"
+required-features = ["std"]
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
 
 [features]
 default = [
@@ -55,50 +62,45 @@ full = [
     "serde",
 ]
 
+nightly = [
+    "{{ project-name }}-core/nightly",
+]
+
 # ************* [FF:Environments] *************
 std = [
     "alloc",
-    "anyhow?/std",
-    "serde?/std",
-    "serde_json?/std",
-    "strum?/std",
-    "thiserror/std",
+    "{{ project-name }}-core/std",
+]
+
+wasi = [    
+    "{{ project-name }}-core/wasi",
 ]
 
 wasm = [
-
+    "{{ project-name }}-core/wasm",
 ]
 
 # ************* [FF:Dependencies] *************
 alloc = [
-    "serde?/alloc",
-    "serde_json?/alloc",
-    "strum/alloc",
+    "{{ project-name }}-core/alloc",
 ]
 
-anyhow = ["dep:anyhow"]
+anyhow = [
+    "{{ project-name }}-core/anyhow",
+]
 
 json = [
-    "alloc",
-    "serde",
-    "serde_json",
+    "{{ project-name }}-core/json",
 ]
 
 serde = [
-    "dep:serde"
+    "{{ project-name }}-core/serde",
 ]
 
-serde_json = ["dep:serde_json"]
+serde_json = [
+    "{{ project-name }}-core/serde_json",
+]
 
-tracing = ["dep:tracing"]
-
-# ************* [Benchmarks] *************
-[[bench]]
-harness = false
-name = "default"
-required-features = ["std"]
-
-# ************* [Unit Tests] *************
-[[test]]
-name = "default"
-required-features = []
+tracing = [
+    "{{ project-name }}-core/tracing",
+]

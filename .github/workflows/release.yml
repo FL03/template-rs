@@ -27,7 +27,7 @@ jobs:
   publish:
     environment:
       name: crates-io
-      url: https://crates.io/crates/concision
+      url: https://crates.io/crates/{{ project-name }}
     runs-on: ubuntu-latest
     steps:
       -

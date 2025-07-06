@@ -4,7 +4,8 @@ updates:
   - package-ecosystem: cargo
     directories:  
       - /
-      - {{ project-name }}
+      - gvf
+      - core
     schedule:
       interval: monthly
   - package-ecosystem: devcontainers

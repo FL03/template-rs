@@ -1,0 +1,119 @@
+[package]
+build = "build.rs"
+description = "The core modules for the {{ project-name }} project."
+name = "{{ project-name }}-core"
+
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = [
+  "cdylib", 
+  "rlib",
+]
+bench = false
+doc = true
+doctest = false
+test = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "v{{version}}"
+
+[dependencies]
+# custom 
+scsys = { workspace = true }
+# error-handling
+anyhow = { optional = true, workspace = true }
+thiserror = { workspace = true }
+# serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# tracing
+tracing = { optional = true, workspace = true }
+# macros & utilities
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { optional = true, workspace = true }
+
+[dev-dependencies]
+lazy_static = { workspace = true }
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
+required-features = []
+
+[features]
+default = [
+    "std",
+]
+
+full = [
+    "default",
+    "json",
+    "serde",
+]
+
+# ************* [FF:Features] *************
+json = [
+    "alloc",
+    "serde",
+    "serde_json",
+]
+
+nightly = [
+    "scsys/nightly",
+]
+
+# ************* [FF:Environments] *************
+std = [
+    "alloc",
+    "anyhow?/std",
+    "scsys/std",
+    "serde?/std",
+    "serde_json?/std",
+    "strum?/std",
+    "thiserror/std",
+]
+
+wasi = [
+    "scsys/wasi"
+]
+
+wasm = [
+    "scsys/wasm",
+]
+
+# ************* [FF:Dependencies] *************
+alloc = [
+    "scsys/alloc",
+    "serde?/alloc",
+    "serde_json?/alloc",
+]
+
+anyhow = ["dep:anyhow"]
+
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+]
+
+serde_json = ["dep:serde_json"]
+
+tracing = ["dep:tracing"]
