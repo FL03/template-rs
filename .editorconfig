@@ -16,7 +16,7 @@ trim_trailing_whitespace = false
 indent_size = 2
 quote_type = single
 
-[*.{json,toml,yaml,yml}]
+[*.{json,yaml,yml}]
 indent_size = 2
 
 [*.md]
