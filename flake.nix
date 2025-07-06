@@ -1,5 +1,5 @@
 {
-  description = "A flake for the proton server";
+  description = "A base flake for Rust-based projects";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
@@ -14,9 +14,9 @@
       in
       {
         packages.default = rustPlatform.buildRustPackage {
-          pname = "pzzld-cli";
-          version = "0.0.0";
-          src = "./.";
+          pname = "{{ project-name }}";
+          version = "{{ version }}";
+          src = "self";
           # If Cargo.lock doesn't exist yet, remove or comment out this block:
           cargoLock = {
             lockFile = ./Cargo.lock;
