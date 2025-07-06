@@ -45,8 +45,8 @@ serde_json = { default-features = false, version = "1" }
 getrandom = { default-features = false, version = "0.3" }
 rand = { default-features = false, version = "0.9" }
 rand_distr = { default-features = false, version = "0.5" }
-uuid = { default-features = false, version = "1" }
 
+# ************* [Profiles] *************
 [profile.dev]
 codegen-units = 256
 debug = true

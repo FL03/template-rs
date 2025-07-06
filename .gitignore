@@ -1,26 +1,46 @@
-# Artifacts
-**/.artifacts/data/
-**/.docker/data/
-
-## cache
-**/.cache/
-
-# config
+# A custom .gitignore file for a Rust-based proejct
+# Config
 **/.config/*.config.*
 
-**/*.env
-**/*.env.*
+!**/.config/default.config.*
+!**/.config/docker.config.*
 
-# Dev
+## Dotenv
 
-### Idea
+!**/*.env.example
+!**/*.env.default
 
-**/.idea/
+!**/default.env
+!**/default.env.*
 
-### vscode
-**/.vscode/
+!**/example.env
+!**/example.env.*
 
-# Misc
+# Language Specific
+
+## Rust
+**/debug/
+**/target/
+
+**/*.bk
+**/*.bk.*
+
+!Cargo.lock
+
+# Platform Specific
+
+## Nix
+**/*.drv
+**/*.drv.*
+
+!**/flake.lock
+
+# Directories
+**/.artifacts/data/
+**/.docker/data/
+**/.cache/
+
+# File Extensions
 **/*.csv
 **/*.csv.*
 
@@ -47,34 +67,3 @@
 
 **/*.zip
 **/*.zip.*
-
-## Nix
-**/*.drv
-**/*.drv.*
-
-!**/flake.lock
-
-
-## Rust
-**/debug/
-**/target/
-
-**/*.bk
-**/*.bk.*
-
-**/Cargo.lock
-
-# Exceptions
-!**/.config/default.config.*
-!**/.config/docker.config.*
-
-!**/*.env.example
-!**/*.env.default
-
-!**/default.env
-!**/default.env.*
-
-!**/example.env
-!**/example.env.*
-
-!**/Cargo.lock
