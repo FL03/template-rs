@@ -2,12 +2,12 @@ version: 2
 
 updates:
   - package-ecosystem: cargo
-    directories:  
-      - /
-      - gvf
-      - core
     schedule:
       interval: monthly
+    directories:  
+      - /
+      - {{ project-name }}
+      - core
   - package-ecosystem: devcontainers
     directory: /
     schedule:

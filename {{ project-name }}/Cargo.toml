@@ -38,7 +38,7 @@ tag-name = "v{{version}}"
 {{ project-name }}-core = { default-features = false, workspace = true }
 
 [dev-dependencies]
-criterion = { features = ["plotters"], workspace = true }
+criterion = { features = ["plotters"], version = "0.7" }
 lazy_static = { workspace = true}
 
 # ************* [Benchmarks] *************

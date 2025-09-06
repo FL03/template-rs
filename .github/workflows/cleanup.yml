@@ -1,4 +1,4 @@
-name: Cleanup
+name: rleanup
 
 on:
   pull_request:

@@ -1,4 +1,4 @@
-name: Clippy
+name: clippy
 
 concurrency:
   cancel-in-progress: false
@@ -7,10 +7,12 @@ concurrency:
 on:
   pull_request:
     branches: [ main, master ]
-    types:
-      - opened
-      - reopened
-      - synchronize
+    types: [ opened, synchronize, reopened, ready_for_review ]
+    paths:
+      - '**.rs'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - '.github/workflows/cargo-clippy.yml'
   push:
     branches: [ main, master ]
     tags:

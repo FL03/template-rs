@@ -24,6 +24,11 @@ doc = true
 doctest = false
 test = true
 
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
+required-features = []
+
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
@@ -34,30 +39,18 @@ version = "v{{version}}"
 no-dev-version = true
 tag-name = "v{{version}}"
 
+
 [dependencies]
-# custom 
-scsys = { workspace = true }
 # error-handling
-anyhow = { optional = true, workspace = true }
 thiserror = { workspace = true }
 # serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
 serde_json = { optional = true, workspace = true }
-# tracing
-tracing = { optional = true, workspace = true }
 # macros & utilities
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { optional = true, workspace = true }
-
-[dev-dependencies]
-lazy_static = { workspace = true }
-
-# ************* [Unit Tests] *************
-[[test]]
-name = "default"
-required-features = []
 
 [features]
 default = [
@@ -78,7 +71,6 @@ json = [
 ]
 
 nightly = [
-    "scsys/nightly",
 ]
 
 # ************* [FF:Environments] *************
@@ -106,8 +98,6 @@ alloc = [
     "serde?/alloc",
     "serde_json?/alloc",
 ]
-
-anyhow = ["dep:anyhow"]
 
 serde = [
     "dep:serde",

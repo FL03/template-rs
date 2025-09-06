@@ -1,4 +1,4 @@
-name: Publish
+name: cargo-publish
 
 concurrency:
   cancel-in-progress: false
@@ -6,13 +6,8 @@ concurrency:
 
 on:
   repository_dispatch:
-    types: [ deploy, publish, cargo-publish, crates-io ]
+    types: [ publish, cargo-publish ]
   workflow_dispatch:
-    inputs:
-      publish:
-        default: true
-        description: 'Publish the crate(s) to crates.io?'
-        type: boolean
 
 jobs:
   crates-io:
@@ -34,12 +29,12 @@ jobs:
       max-parallel: 1
       matrix:
         package:
-          - gvf-core
-          - gvf
+          - {{ project-name }}-core
+          - {{ project-name }}
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           lfs: true

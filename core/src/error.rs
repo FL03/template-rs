@@ -15,9 +15,9 @@ pub type Result<T = ()> = core::result::Result<T, Error>;
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum Error {
-    #[cfg(feature = "anyhow")]
-    #[error(transparent)]
-    AnyError(#[from] anyhow::Error),
+    #[cfg(feature = "alloc")]
+    #[error("Unknown error: {0}")]
+    UnknownError(String),
     #[cfg(feature = "alloc")]
     #[error(transparent)]
     BoxError(#[from] Box<dyn core::error::Error + Send + Sync>),
@@ -29,9 +29,6 @@ pub enum Error {
     #[cfg(feature = "std")]
     #[error(transparent)]
     IOError(#[from] std::io::Error),
-    #[cfg(feature = "alloc")]
-    #[error("Unknown error: {0}")]
-    UnknownError(String),
 }
 
 #[cfg(feature = "alloc")]

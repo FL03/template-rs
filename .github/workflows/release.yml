@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   release:
@@ -25,9 +25,6 @@ permissions:
 
 jobs:
   publish:
-    environment:
-      name: crates-io
-      url: https://crates.io/crates/{{ project-name }}
     runs-on: ubuntu-latest
     steps:
       -
