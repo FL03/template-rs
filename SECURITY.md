@@ -6,12 +6,15 @@ Checkout the current and supported packages below:
 
 | Version         | Supported?         |
 |:----------------|:-------------------|
-| 0.0.x           | :white_check_mark: |
-| <=0.0.x, >0.0.1 | :white_check_mark: |
-| < 0.0.1         | :x:                |
+| 0.0.0           | :white_check_mark: |
+| <0.0.0,>=0.0.0  | :white_check_mark: |
+| <0.0.0          | :x:                |
 
 ## Reporting a Vulnerability
 
-- Email our [support team](mailto:support@scsys.io)
-- Open an issue in our [GitHub repository](https://github.com/{{alias}}/{{project_name}}/issues)
-- Visit our [website](https://scsys.io) for more information
+To report a vulnerability, please use one of the following methods:
+
+- Open an issue in our [GitHub repository](https://github.com/{{alias}}/{{project-name}}/issues)
+
+- Email our team at <support@pzzld.org>
+- Visit our [website](https://pzzld.org) for more information
