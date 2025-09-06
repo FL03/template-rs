@@ -13,21 +13,40 @@
 #![cfg_attr(feature = "nightly", feature(allocator_api))]
 
 #[cfg(not(all(feature = "alloc", feature = "std")))]
-compiler_error! {
-    "Either the `alloc` or `std` feature must be enabled for the `gvf-core` crate."
+compile_error! {
+    "Either the `alloc` or `std` feature must be enabled for the crate to compile."
 }
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
 #[doc(inline)]
-pub use self::error::{Error, Result};
+pub use self::{
+    error::{Error, Result},
+    traits::prelude::*,
+};
 
 pub mod error;
 
+#[macro_use]
+pub(crate) mod macros {
+    #[macro_use]
+    pub(crate) mod seal;
+}
+
 pub mod traits {
     //! the core traits for the {{ project-name }} project
+    //!
+    #[doc(inline)]
+    pub mod field;
+
+    pub(crate) mod prelude {
+        #[allow(unused_imports)]
+        pub use crate::error::{Error, Result};
+    }
 }
 
 #[doc(hidden)]
-pub mod prelude {}
+pub mod prelude {
+    pub use crate::traits::prelude::*;
+}

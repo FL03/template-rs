@@ -77,6 +77,8 @@ wasi = [
 ]
 
 wasm = [
+    "alloc",
+    "wasm_bindgen",
     "{{ project-name }}-core/wasm",
 ]
 
@@ -101,6 +103,6 @@ serde_json = [
     "{{ project-name }}-core/serde_json",
 ]
 
-tracing = [
-    "{{ project-name }}-core/tracing",
+wasm_bindgen = [
+    "{{ project-name }}-core/wasm_bindgen",
 ]

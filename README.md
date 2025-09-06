@@ -2,7 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/{{ project-name }}?style=for-the-badge&logo=rust)](https://crates.io/crates/{{ project-name }})
 [![docs.rs](https://img.shields.io/docsrs/{{ project-name }}?style=for-the-badge&logo=docs.rs)](https://docs.rs/{{ project-name }})
-[![GitHub License](https://img.shields.io/github/license/{{ alias }}/{{ project-name }}?style=for-the-badge&logo=github)](https://github.com/{{ alias }}/{{ project-name }}/blob/main/LICENSE)
+[![GitHub License](https://img.shields.io/github/license/{{ alias }}/{{ project-name }}?style=for-the-badge&logo=github)](LICENSE)
 
 ***
 
@@ -32,7 +32,7 @@ version = "0.0.x"
     extern crate {{ project-name }};
 
     fn main() -> anyhow::Result<()> {
-        
+
         Ok(())
     }
 

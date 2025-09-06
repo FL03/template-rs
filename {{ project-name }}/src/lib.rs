@@ -10,11 +10,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "nightly", feature(allocator_api))]
 
-#[cfg(not(all(feature = "alloc", feature = "std")))]
-compiler_error! {
-    "Either the `alloc` or `std` feature must be enabled for the crate to compile."
-}
-
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
