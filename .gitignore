@@ -1,64 +1,142 @@
-# A custom .gitignore file for a Rust-based proejct
-# Config
+# General
+*.bk
+*.bk.*
+
+*.db
+*.db.*
+
+*.log
+*.log.*
+
+*.pem
+*.pem.*
+
+*.gz
+*.gz.*
+
+*.sqlite
+*.sqlite.*
+
+*.sqlite3
+*.sqlite3.*
+
+*.zip
+*.zip.*
+
+## Directories
+**/.artifacts/cache/
+**/.artifacts/temp/
+**/.artifacts/uploads/
+
+!**/.artifacts/docs
+!**/.artifacts/.gitkeep
+
+**/.cache/
+**/coverage/
+**/build/
+**/coverage/
+**/dist/
+**/out/
+**/logs/
+**/tmp/
+
+## Development
+
+### Config Files
 **/.config/*.config.*
 
 !**/.config/default.config.*
 !**/.config/docker.config.*
+!**/.config/xtask.config.*
 
-## Dotenv
+### dotenv
+*.env
+*.env.*
 
-!**/*.env.example
-!**/*.env.default
+!*default.env*
+!*.env.default
 
-!**/default.env
-!**/default.env.*
+!*example.env*
+!*.env.example
 
-!**/example.env
-!**/example.env.*
+### IDEs
+
+#### Atom
+**/.atom
+
+#### JetBrains
+**/.idea/
+
+*.iml
+*.ipr
+*.iws
+
+#### Visual Studio Code
+**/.vscode/
+
+!**/.vscode/settings.json
+
+## Operating Systems
+
+### Linux
+
+#### NixOS
+!**/flake.lock
+
+**/.nix-channels
+**/.nix-defexpr
+**/.nix-profile
+**/.nix
+
+### Windows
+
+#### Windows Subsystem for Linux (WSL)
+*:Zone.Identifier
 
 # Language Specific
 
+## Python
+**/__pycache__/
+**/venv/
+
+*.pyc
+*.pyc.*
+
+*.pyo
+*.pyd
+
 ## Rust
-**/debug/
-**/target/
+**/target
 
-**/*.bk
-**/*.bk.*
-
+!.cargo/config.toml
 !**/Cargo.lock
 
-# Platform Specific
+*.rs.bk
 
-## Nix
-**/*.drv
-**/*.drv.*
+# *.lock
+*-lock.json
 
-!**/flake.lock
+## Node.JS
+**/.DS_STORE
+**/build
+**/node_modules
 
-# Directories
-**/.artifacts/data/
-**/.docker/data/
-**/.cache/
+*.tsbuildinfo
 
-# File Extensions
-**/*.csv
-**/*.csv.*
+**/.pnp
+**/.pnp.*
 
-**/*.db
-**/*.db.*
+**/.yarn/install-state.gz
 
-**/*.db-*.*
+### Frameworks
 
-**/*.log
-**/*.log.*
+#### Next.js
+**/.next
+**/out
 
-**/*.tmp
-**/*.tmp.*
+**/next-env.d.ts
 
-**/*.tmp-*
+# Services
 
-**/*.whl
-**/*.whl.*
-
-**/*.zip
-**/*.zip.*
+## Vercel
+**/.vercel

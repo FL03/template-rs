@@ -1,20 +1,67 @@
 ---
 title: Quickstart
-description: A detailed guide on how to get started with the {{project_name}} project.
+description: A quickstart guide to set up the environment and build the pzzld project from source.
 ---
+
+Welcome to the quickstart guide for `pzzld`, a novel topological computing engine inspired by the neo-Riemannian theory of music. This guide will help you set up your environment and build the project from source.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+  - [Setup Rust](#setup-rust)
+- [Getting Started](#getting-started)
+  - [Build and Test](#build-and-test)
 
 ## Prerequisites
 
-Listed below are the tools and dependencies required to build and run the project:
+Before you begin, ensure you have the following prerequisites installed on your system:
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Rust](https://www.rust-lang.org/tools/install)
+- [Git](https://git-scm.com/) - For cloning the repository.
+- [Rust](https://www.rust-lang.org/) (version 1.88 or later)
+  - Includes `cargo`, Rust's package manager and build tool.
 
-### Additional Utilities
+Optionally, you may also want to install the following tools:
 
-#### `cargo-binstall`
+- [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) - A utility designed to streamline the installation of Rust binaries.
+- [cargo-criterion](https://bheisler.github.io/criterion.rs/book/cargo_criterion/cargo_criterion.html) - A benchmarking tool for Rust projects.
 
-To streamline the installation of additional, cargo-based tooling ensure that [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) is installed. This tool allows you to install Rust binaries easily and quickly.
+### Setup Rust
+
+Ensure you have the latest version of Rust installed. You can install Rust using [rustup](https://rustup.rs/).
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+After installation, I always recommend ensuring that rustup is updated to the latest version:
+
+```bash
+rustup update
+```
+
+And to add the latest nightly toolchain, which is often useful for development:
+
+```bash
+rustup toolchain install nightly
+```
+
+#### *Adding additional targets*
+
+Add the necessary `wasm32-*` targets for WebAssembly:
+
+```bash
+rustup target add wasm32-unknown-unknown wasm32-wasip1 wasm32-wasip2
+```
+
+#### *Optional: Installing cargo-binstall*
+
+If you want to use `cargo-binstall` for easier installation of Rust binaries, you can install it with the following command:
+
+```bash
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+```
+
+or install it via `cargo`:
 
 ```bash
 cargo install cargo-binstall
@@ -22,62 +69,34 @@ cargo install cargo-binstall
 
 ## Getting Started
 
-Ensure that `rustup` and all installed toolchains are updated:
+Start by cloning the repository:
 
 ```bash
-rustup update
-```
-
-Optionally, instal the `wasm32-*` targets for WebAssembly development:
-
-```bash
-rustup target add wasm32-unknown-unknown wasm32-wasip1 wasm32-wasip2
-```
-
-### Building from the source
-
-Get started by cloning the repository:
-
-```bash
-git clone https://github.com/FL03/{{project_name}}.git --branch main
+git clone git@github.com:FL03/pzzld --depth 1 --branch main
 ```
 
 Then, navigate to the project directory:
 
 ```bash
-cd {{project_name}}
+cd pzzld
 ```
 
-#### Native
+### Build and Test
 
-For native development, you can run the server using cargo:
+Once you're in the project directory, you can build the project using `cargo`:
 
 ```bash
-cargo run --locked --release --features full --bin pzzld --
+cargo build --workspace --release --all-features
 ```
 
-#### WebAssembly
-
-##### WebAssembly System Interface (wasi)
-
-Build the project using the wasm32 target:
+Then, if you want, run the tests by:
 
 ```bash
-cargo build --locked --workspace --release --features wasi --target wasm32-wasip2
+cargo test --workspace --release --features full
 ```
 
-### Docker
-
-You can also build the project using Docker. Start by building the Docker image:
+or benchmark the project with:
 
 ```bash
-docker buildx build --platform linux/amd64 -t jo3mccain/{{project_name}}:latest -f ./Dockerfile .
+cargo bench --workspace --release --verbose --features full --
 ```
-
-Then, run the Docker container:
-
-```bash
-docker run -d -it --rm -p 8080:8080 -v $(pwd):/app jo3mccain/{{project_name}}:latest
-```
-
-This will start the server and bind it to port 8080 on your host machine. You can access the server by navigating to `http://localhost:8080` in your web browser.
