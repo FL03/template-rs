@@ -113,7 +113,7 @@ jobs:
             --features ${{ matrix.features }} \
             --target ${{ matrix.target }}
       - name: Upload artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: components-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/*.wasm
