@@ -30,24 +30,11 @@ jobs:
       matrix:
         package:
           # sdk
-          - pzzld-traits
-          - pzzld-core
-          - pzzld-config
-          - pzzld-rt
-          - pzzld-net
-          - pzzld-substrate
-          - pzzld-platform
-          - pzzld
-          # binaries
-          - pzzld-app
-          - pzzld-cli
-          - pzzld-ppm
-          # components
-          - pzzld-cmp-plant
-          - pzzld-cmp-worker
+          - {{ project-name }}
+          - {{ project-name }}-core
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.event.client_payload.ref || github.ref }}

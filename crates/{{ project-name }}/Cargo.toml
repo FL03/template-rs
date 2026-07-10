@@ -15,19 +15,12 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = [
-  "cdylib", 
-  "rlib",
-]
-bench = true
-doc = true
-doctest = false
-test = true
+path = "lib.rs"
 
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
+rustc-args = ["--cfg", "docsrs"]
 version = "v{{version}}"
 
 [package.metadata.release]
@@ -38,8 +31,91 @@ tag-name = "v{{version}}"
 {{ project-name }}-core = { default-features = false, workspace = true }
 
 [dev-dependencies]
-criterion = { features = ["plotters"], version = "0.7" }
-lazy_static = { workspace = true}
+criterion = { features = ["plotters"], workspace = true }
+lazy_static = { workspace = true }
+
+[features]
+default = [
+  "std",
+]
+
+full = [
+  "default",
+  "hashbrown",
+  "json",
+  "time",
+]
+
+# ********* [FF] Flags *********
+
+time = [
+  "std",
+  "chrono",
+  "time_03",
+  "{{ project-name }}-core/time",
+]
+
+# ********* [FF] Targets *********
+nightly = [
+  "{{ project-name }}-core/nightly",
+]
+
+wasi = [
+  "{{ project-name }}-core/wasi",
+]
+
+wasm = [
+  "alloc",
+  "wasm_bindgen",
+  "{{ project-name }}-core/wasm",
+]
+
+# ********* [FF] Standard Library *********
+alloc = [
+  "{{ project-name }}-core/alloc",
+]
+
+std = [
+  "alloc",
+  "{{ project-name }}-core/std",
+]
+
+# ********* [FF] Deps *********
+chrono = [
+  "{{ project-name }}-core/chrono",
+]
+
+json = [
+  "{{ project-name }}-core/json",
+]
+
+rayon = [
+  "{{ project-name }}-core/rayon",
+]
+
+serde = [
+  "{{ project-name }}-core/serde",
+]
+
+serde_json = [
+  "{{ project-name }}-core/serde_json",
+]
+
+time_03 = [
+  "{{ project-name }}-core/time_03",
+]
+
+tracing = [
+  "{{ project-name }}-core/tracing",
+]
+
+wasm_bindgen = [
+  "{{ project-name }}-core/wasm_bindgen",
+]
+
+witbind = [
+  "{{ project-name }}-core/witbind",
+]
 
 # ************* [Benchmarks] *************
 [[bench]]
@@ -50,59 +126,4 @@ required-features = ["std"]
 # ************* [Unit Tests] *************
 [[test]]
 name = "default"
-
-[features]
-default = [
-    "std",
-]
-
-full = [
-    "default",
-    "json",
-    "serde",
-]
-
-nightly = [
-    "{{ project-name }}-core/nightly",
-]
-
-# ************* [FF:Environments] *************
-std = [
-    "alloc",
-    "{{ project-name }}-core/std",
-]
-
-wasi = [    
-    "{{ project-name }}-core/wasi",
-]
-
-wasm = [
-    "alloc",
-    "wasm_bindgen",
-    "{{ project-name }}-core/wasm",
-]
-
-# ************* [FF:Dependencies] *************
-alloc = [
-    "{{ project-name }}-core/alloc",
-]
-
-anyhow = [
-    "{{ project-name }}-core/anyhow",
-]
-
-json = [
-    "{{ project-name }}-core/json",
-]
-
-serde = [
-    "{{ project-name }}-core/serde",
-]
-
-serde_json = [
-    "{{ project-name }}-core/serde_json",
-]
-
-wasm_bindgen = [
-    "{{ project-name }}-core/wasm_bindgen",
-]
+required-features = []

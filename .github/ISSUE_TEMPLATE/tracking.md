@@ -7,13 +7,9 @@ title: 'Tracking issue for '
 type: Feature
 ---
 
-<!-- A concise explanation of the issue (or feature) being tracked. -->
-
 ## Overview
 
-<!-- 
-Detail the issue or feature being tracked. Include any relevant context, such as the problem it solves or the motivation behind it. 
--->
+<!-- A dense summary of the proposal detailing: what, how, and why -->
 
 ## Related Issues and Pull Requests
 

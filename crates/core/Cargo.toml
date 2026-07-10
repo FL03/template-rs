@@ -15,8 +15,8 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = ["cdylib", "rlib",]
 bench = false
+crate-type = ["cdylib", "rlib"]
 doc = true
 doctest = false
 test = true
@@ -28,7 +28,7 @@ required-features = []
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
+rustc-args = ["--cfg", "docsrs"]
 version = "v{{version}}"
 
 [package.metadata.release]
@@ -38,6 +38,8 @@ tag-name = "v{{version}}"
 [dependencies]
 # error-handling
 thiserror = { workspace = true }
+# hashbrown
+hashbrown = { optional = true, workspace = true }
 # serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -46,59 +48,109 @@ serde_json = { optional = true, workspace = true }
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
 # WebAssembly
 wasm-bindgen = { optional = true, workspace = true }
+wit-bindgen = { optional = true, workspace = true }
 
 [features]
 default = [
-    "std",
+  "std",
 ]
 
 full = [
-    "default",
-    "json",
-    "serde",
+  "default",
+  "hashbrown",
+  "json",
+  "time",
 ]
 
-# ************* [FF:Features] *************
+# ********* [FF] Flags *********
 json = [
-    "alloc",
-    "serde",
-    "serde_json",
+  "alloc",
+  "serde",
+  "serde_json",
 ]
 
-nightly = []
+time = [
+  "std",
+  "chrono",
+  "time_03",
+  "chrono?/clock",
+]
 
-# ************* [FF:Environments] *************
+# ********* [FF] Standard Library *********
+alloc = [
+  "hashbrown?/alloc",
+  "chrono?/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+  "wasm-bindgen?/gg-alloc",
+]
+
 std = [
-    "alloc",
-    "anyhow?/std",
-    "serde?/std",
-    "serde_json?/std",
-    "strum?/std",
-    "thiserror/std",
+  "alloc",
+  "anyhow?/std",
+  "chrono?/std",
+  "hashbrown?/std",
+  "serde?/std",
+  "serde_json?/std",
+  "strum?/std",
+  "thiserror/std",
+  "time?/std",
+  "wasm-bindgen?/std",
+  "wit-bindgen?/std",
+]
+
+# ********* [FF] Targets *********
+nightly = [
+  "hashbrown?/nightly"
 ]
 
 wasi = [
-    "alloc",
+  "alloc",
+  "witbind",
 ]
 
 wasm = [
-    "alloc",
-    "wasm_bindgen",
+  "alloc",
+  "wasm_bindgen",
 ]
 
-# ************* [FF:Dependencies] *************
-alloc = [
-    "serde?/alloc",
-    "serde_json?/alloc",
+# ********* [FF] Deps *********
+
+chrono = ["dep:chrono"]
+
+hashbrown = ["dep:hashbrown"]
+
+rayon = [
+  "dep:rayon",
+  "hashbrown?/rayon",
 ]
 
 serde = [
-    "dep:serde",
-    "dep:serde_derive",
+  "dep:serde",
+  "dep:serde_derive",
+  "chrono?/serde",
+  "time?/serde",
+  "wasm-bindgen?/serde",
 ]
 
-serde_json = ["dep:serde_json"]
+serde_json = [
+  "dep:serde_json",
+  "wasm-bindgen?/serde_json",
+]
 
-wasm_bindgen = ["dep:wasm-bindgen"]
+time_03 = ["dep:time"]
+
+tracing = ["dep:tracing"]
+
+wasm_bindgen = [
+  "dep:wasm-bindgen",
+]
+
+witbind = [
+  "dep:wit-bindgen",
+]

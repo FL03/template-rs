@@ -6,101 +6,96 @@ concurrency:
 
 on:
   pull_request:
-    branches: [main, master]
-    types: [synchronize]
+    branches: [ main, master ]
+    types: [ synchronize ]
+    paths:
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
   push:
-    branches: [main, master]
-    tags: [latest, v*, "*-nightly"]
+    tags:
+      - latest
+      - v[0-9]*
+      - v[0-9]*.[0-9]*.[0-9]*
   repository_dispatch:
-    types: [rust, rust-ci]
-  release:
-    types: [created]
+    types: [ cargo-test ]
   workflow_dispatch:
     inputs:
+      runner:
+        default: self-hosted
+        description: What type of runner should the action leverage?
+        type: choice
+        options: [macos-latest, ubuntu-latest, windows-latest, self-hosted]
       target:
-        default: 'x86_64-unknown-linux-gnu'
-        description: "Which target would you like to compile to?"
+        default: x86_64-unknown-linux-gnu
+        description: "Select the target to compile for"
         required: false
-        type: string
       toolchain:
         default: stable
         description: "Select a toolchain to test (stable, nightly)"
-        required: false
+        required: true
         type: choice
-        options: [stable, nightly]
-      package:
-        description: "Which package are we testing?"
-        type: string
-        required: false
-
-env:
-  CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: full
+        options: [ stable, nightly ]
 
 jobs:
   test:
-    name: Cargo Test
-    if: github.env.RUSTUP_TOOLCHAIN != 'nightly'
-    runs-on: ubuntu-latest
+    name: Test the workspace
+    runs-on: ${{ github.event.inputs.runner || 'ubuntu-latest' }}
+    env:
+      CACHE_ON_FAILURE: true
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: full
+      RUSTC_WRAPPER: sccache
+      SCCACHE_GHA_ENABLED: true
+    permissions:
+      actions: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
-        features: [full, default]
+        features: [ full, default, cli ]
         include:
-          - target: ${{ github.event.inputs.target || 'x86_64-unknown-linux-gnu'}}
+          - target: ${{ github.event.inputs.target || 'x86_64-unknown-linux-gnu' }}
             toolchain: ${{ github.event.inputs.toolchain || 'stable' }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: setup rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          target: ${{ matrix.target }}
-          toolchain: ${{ matrix.toolchain }}
-          override: true
-      - name: cargo test (${{ matrix.features }})
-        run: cargo build -r --locked --workspace --features ${{ matrix.features }} --target ${{ matrix.target }}
-  nightly:
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.toolchain == 'nightly' || false
-    continue-on-error: true
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [aarch64-apple-darwin, x86_64-unknown-linux-gnu]
-        features:
-          - all
-          - no_std
-          - "alloc,nightly"
-        package:
-          - pzzld-core
-          - pzzld-traits
-    steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          fetch-tags: true
+          ref: ${{ github.event.client_payload.ref  || github.ref }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare the workflow
+        run: |
+          if [[ "${{ matrix.toolchain }}" == "nightly" ]]; then
+            echo "RUSTFLAGS=-C panic=abort -Z panic_abort_tests" >> $GITHUB_ENV
+          fi
+      - name: Setup sccache
+        uses: mozilla-actions/sccache-action@v0.0.10
+      - name: Setup rust-cache
+        uses: swatinem/rust-cache@v2
+        with:
+          key: cargo-${{ matrix.toolchain }}-${{ matrix.target }}-${{ matrix.features }}
+          cache-targets: false
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          toolchain: nightly
+          cache: false
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
           override: true
-      - name: Test (all-features)
-        if: matrix.features == 'all'
-        run: cargo test -r --locked --all-features --target ${{ matrix.target }} -p ${{ matrix.package }}
-      - name: Test (no_std)
-        continue-on-error: true
-        if: matrix.features == 'no_std'
-        run: cargo test -r --locked --no-default-features --target ${{ matrix.target }} -p ${{ matrix.package }}
-        env:
-          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
-      - name: Test (${{ matrix.features }})
-        continue-on-error: true
-        if: matrix.features != 'all' && matrix.features != 'no_std'
-        run: cargo test -r --locked --no-default-features --target ${{ matrix.target }} -p ${{ matrix.package }} -F ${{ matrix.features }}
-        env:
-          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
+      - name: Setup nextest
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-nextest
+      - name: test (${{ matrix.features }})
+        run: |
+          cargo nextest run --locked --no-fail-fast --tests --workspace \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}
+      - name: Run doc-tests
+        if: matrix.features == 'full'
+        run: |
+          cargo test --doc --workspace --features full --frozen \
+            --target ${{ matrix.target }}
