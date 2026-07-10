@@ -1,10 +1,9 @@
 [workspace]
 default-members = [
-  "{{ project-name }}",
+  "crates/{{ project-name }}",
 ]
 members = [
-  "{{ project-name }}",
-  "core",
+  "crates/*",
 ]
 
 resolver = "3"
@@ -24,8 +23,8 @@ version = "0.0.0"
 
 [workspace.dependencies]
 # local
-{{ project-name }} = { default-features = false, path = "{{ project-name }}", version = "0.0.0" }
-{{ project-name }}-core = { default-features = false, path = "core", version = "0.0.0" }
+{{ project-name }} = { default-features = false, path = "crates/{{ project-name }}", version = "0.0.0" }
+{{ project-name }}-core = { default-features = false, path = "crates/core", version = "0.0.0" }
 # benchmarks
 criterion = { features = ["plotters"], version = "0.8" }
 # error handling

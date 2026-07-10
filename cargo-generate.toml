@@ -7,7 +7,7 @@ includes = [
 
 exclude = [
   ".github/workflows/*.yml",
-  "."
+  "*/.DS_STORE"
 ]
 
 [placeholders.description]
